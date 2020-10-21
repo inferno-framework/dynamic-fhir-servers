@@ -8,7 +8,6 @@ class ReadController < ApplicationController
         # valid resources do not contain "not" in their value code and for this instance are read
         resources.each do |i|
             if i["interaction"]
-                puts i["interaction"][0]
                 i["interaction"].each do |j|
                     if !j["extension"][0]["valueCode"].downcase.include?("not") && j["code"].downcase == "read"
                         validTypes.push(i["type"].downcase)
