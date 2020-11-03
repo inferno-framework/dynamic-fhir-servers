@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="cs6440_development@localhost" uuid="2d248972-0f44-4e3f-9144-c3dd36ba5e08">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/cs6440_development</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="cs6440_test@localhost" uuid="53286cad-336e-4d2e-8fab-e90c775b6911">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/cs6440_test</jdbc-url>
+    </data-source>
+  </component>
+</project>
