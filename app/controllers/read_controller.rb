@@ -10,7 +10,7 @@ class ReadController < ApplicationController
             if i["interaction"]
                 i["interaction"].each do |j|
                     if !j["extension"][0]["valueCode"].downcase.include?("not") && j["code"].downcase == "read"
-                        validTypes.push(i["type"].downcase)
+                        validTypes.push(i["type"])
                         break
                     end
                 end
@@ -19,7 +19,7 @@ class ReadController < ApplicationController
 
         type = params[:type]
         id = params[:id]
-        if validTypes.include?(type.downcase)
+        if validTypes.include?(type)
             #json_response(validTypes)
             # here we would query our DB for the type if it's a valid type and then lookup the id
             # so for allergy intolerance we have an allergy intolerance table and lookup the id
