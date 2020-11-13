@@ -18,8 +18,8 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: cs6440
-  password: <%= ENV['CS6440_DATABASE_PASSWORD'] %>
+  username: postgres
+  password: default
   host: localhost
   timeout: 5000
 
