@@ -87,7 +87,7 @@ class SearchController < ApplicationController
             # pull the actual data and see what records match
             @connection = ActiveRecord::Base.connection
             searchResults = Array.new
-            results = @connection.exec_query("SELECT resource FROM #{type}")
+            results = @connection.exec_query("SELECT resource FROM allresourcetype where lower(resource_type) = '#{type.downcase}'")
 
             results.each do |result|
                 queryMatch = true
