@@ -24,7 +24,8 @@ class ReadController < ApplicationController
             # here we would query our DB for the type if it's a valid type and then lookup the id
             # so for allergy intolerance we have an allergy intolerance table and lookup the id
             @connection = ActiveRecord::Base.connection
-            result = @connection.exec_query("SELECT resource FROM #{type} WHERE id = '#{id}'")
+            #result = @connection.exec_query("SELECT resource FROM #{type} WHERE id = '#{id}'")
+            result = @connection.exec_query("SELECT resource FROM allresourcetype WHERE id = '#{id}' and lower(resource_type) = '#{type.downcase}'")
             json_response(result[0])
         else
             render :json => "Unknown Resource type: #{type}, valid resource types are : #{validTypes}", :status => 404
