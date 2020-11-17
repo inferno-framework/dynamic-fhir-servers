@@ -4,16 +4,31 @@ The fhir-api provides a dynamic server for handling get/search requests based on
 
 ## REST API:
 
-### GetById, ability to search for specific resources by id and get data back based on example json data provided for that resource
+### GetById
 
-Route: GET /resource/id
+Ability to search for specific resources by id and get data back based on example json data provided for that resource
+
+#### Route:
+
+GET /resource/id
+
+####
+
 Response: resource JSON
 
 ### Search, ability to query with various valid parameter combinations and get data back based on example json data provided for that resource
 
-Route: GET /resource?queryParameters
-Response: resource JSON
-Requires: fhir-validator-wrapper running in the background found at: https://github.com/inferno-community/fhir-validator-wrapper
+#### Route:
+
+GET /resource?queryParameters
+
+#### Response:
+
+resource JSON
+
+#### Requires:
+
+fhir-validator-wrapper running in the background found at: https://github.com/inferno-community/fhir-validator-wrapper
 
 ## System dependencies
 
@@ -48,3 +63,5 @@ bundle install
 ```shell script
 rails s
 ```
+
+#### Note: https://github.com/inferno-community/fhir-validator-wrapper must be running on port 4567 if using search commands
