@@ -1,24 +1,67 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The fhir-api provides a dynamic server for handling get/search requests based on user provided json data in the form of the implementation guide that contains a capability statement
 
-Things you may want to cover:
+## REST API:
 
-* Ruby version
+### GetById
 
-* System dependencies
+Ability to search for specific resources by id and get data back based on example json data provided for that resource
 
-* Configuration
+#### Route:
 
-* Database creation
+GET /resource/id
 
-* Database initialization
+####
 
-* How to run the test suite
+Response: resource JSON
 
-* Services (job queues, cache servers, search engines, etc.)
+### Search, ability to query with various valid parameter combinations and get data back based on example json data provided for that resource
 
-* Deployment instructions
+#### Route:
 
-* ...
+GET /resource?queryParameters
+
+#### Response:
+
+resource JSON
+
+#### Requires:
+
+fhir-validator-wrapper running in the background found at: https://github.com/inferno-community/fhir-validator-wrapper
+
+## System dependencies
+
+Requires PostGreSQL installed 1.2.3 or above
+
+Requires Ruby version 2.7.2
+
+Requires Rails 6.0.3.4
+
+## Configuration
+
+Assumes default PostGreSQL password, can be modified in the Database.yml file as needed
+
+## Database creation - this ideally will be simplified in the future to be one command that can run on startup without user interaction
+
+```shell script
+rake db:create
+rake db:structure:load
+rake db:seed
+```
+
+## Running Locally
+
+### Initial Setup Commands
+
+```shell script
+bundle install
+```
+
+### Starting up server each time
+
+```shell script
+rails s
+```
+
+#### Note: https://github.com/inferno-community/fhir-validator-wrapper must be running on port 4567 if using search commands
