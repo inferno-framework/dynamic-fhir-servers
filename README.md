@@ -12,9 +12,9 @@ Ability to search for specific resources by id and get data back based on exampl
 
 GET /resource/id
 
-####
+#### Response:
 
-Response: resource JSON
+resource JSON
 
 ### Search
 
