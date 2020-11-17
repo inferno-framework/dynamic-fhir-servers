@@ -1,3 +1,4 @@
+require 'net/http'
 class SearchController < ApplicationController
     include Parser
     def search
@@ -5,6 +6,7 @@ class SearchController < ApplicationController
 
         validTypes = Array.new
         validParams = {}
+        definitionLookups = {}
         validCombinations = {}
 
         # valid resources do not contain "not" in their value code and for this instance are search-type
@@ -23,8 +25,10 @@ class SearchController < ApplicationController
                     if k["name"]
                         if !validParams[i["type"]]
                             validParams[i["type"]] = [k["name"]]
+                            definitionLookups[i["type"]] = {k["name"] => k["definition"]}
                         else
                             validParams[i["type"]] = validParams[i["type"]].push(k["name"])
+                            definitionLookups[i["type"]][k["name"]] = k["definition"]
                         end
                     end
                 end
@@ -53,6 +57,7 @@ class SearchController < ApplicationController
         end
 
         #puts validCombinations["CarePlan"]
+        #puts definitionLookups["CarePlan"]
 
         # now with valid resources
         type = params[:type]
@@ -77,7 +82,16 @@ class SearchController < ApplicationController
                     paramKeys.push(i)
                 end
 
-                if !validCombinations[type].include?(paramKeys)
+                invalidCombination = true
+
+                validCombinations[type].each do |combo|
+                    if combo.sort == paramKeys.sort
+                        invalidCombination = false
+                        break
+                    end
+                end
+
+                if invalidCombination
                     render :json => "Unknown search parameter combination: #{paramKeys}. Value search parameter combinations for this search are : #{validCombinations[type]}", :status => 400
                     return
                 end
@@ -92,15 +106,45 @@ class SearchController < ApplicationController
             results.each do |result|
                 queryMatch = true
                 jsonResult = JSON.parse(result["resource"])
+                queryExpression = ""
+
                 if jsonResult
-                    puts jsonResult
+                    #puts jsonResult
                     queryParams.each do |i,j|
-                        #if !JSON.generate(jsonResult[i]).include?(j)
-                        if !JSON.generate(jsonResult).include?(j)
-                            #puts jsonResult[i]
+                        # query definition to parse out the FHIR expression
+                        # old HTTP solution
+                        # expressionURI = definitionLookups[type][i].sub! 'SearchParameter/', 'SearchParameter-'
+                        # expressionURI = URI.parse(expressionURI + '.json')
+                        # response = Net::HTTP.get_response(expressionURI)
+                        # tempReturn = JSON.parse(response.body)
+                        #puts tempReturn["expression"]
+                        #puts definitionLookups[type][i].split('/')[-1]
+
+                        Dir["**/app/jsonfiles/SearchParameter*#{definitionLookups[type][i].split('/')[-1]}.json"].each do |file|
+                            queryExpression = (JSON.parse(File.read(file)))["expression"]
+                            break
+                        end
+
+                        # parse out functions for now since validator doesn't work with those here yet
+                        # replace everything after second dot if it has params like a function
+                        if queryExpression.include?("()")
+                            querySpliced = queryExpression.split(".")
+                            queryExpression = querySpliced[0] + "." + querySpliced[1]
+                        end
+
+                        # external integration to get result of FHIR expression
+                        uri = URI("http://localhost:4567/evaluate?path=#{queryExpression}")
+                        req = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
+                        req.body = jsonResult.to_json
+                        res = Net::HTTP.start(uri.hostname, uri.port) do |http|
+                        httpResponse = http.request(req)
+                        puts ("response: #{httpResponse.body}")
+                        if !httpResponse.body.include?(j)
                             puts ("not found: #{j}")
                             queryMatch = false
                         end
+                        end
+
                     end
 
                     if queryMatch
