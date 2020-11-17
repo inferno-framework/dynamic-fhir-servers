@@ -16,7 +16,9 @@ GET /resource/id
 
 Response: resource JSON
 
-### Search, ability to query with various valid parameter combinations and get data back based on example json data provided for that resource
+### Search
+
+Ability to query with various valid parameter combinations and get data back based on example json data provided for that resource
 
 #### Route:
 
