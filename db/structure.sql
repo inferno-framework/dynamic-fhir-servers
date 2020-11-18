@@ -395,8 +395,8 @@ ALTER TABLE ONLY public.items ALTER COLUMN id SET DEFAULT nextval('public.items_
 -- Name: allergyintolerance allergyintolerance_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.allresourcetype
-    ADD CONSTRAINT allresourcetype_pkey PRIMARY KEY (resource_type, id);
+--ALTER TABLE ONLY public.allresourcetype
+--    ADD CONSTRAINT allresourcetype_pkey PRIMARY KEY (resource_type, id);
 
 --
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
