@@ -49,7 +49,10 @@ Assumes default PostGreSQL password, can be modified in the Database.yml file as
 ```shell script
 rake db:create
 rake db:structure:load
-rake db:seed
+# To load json example data from <Ruby Root>/db/seeds/package/example/
+rake db:seed json_file='package'
+# To load json data from Synthea from <Ruby Root>/db/seeds/synthea
+rake db:seed json_file='synthea'
 ```
 
 ## Running Locally
