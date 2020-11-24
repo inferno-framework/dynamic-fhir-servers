@@ -129,11 +129,20 @@ class SearchController < ApplicationController
           end
         end
 
-        searchResults.push(result['resource']) if queryMatch
+        searchResults.push(JSON.parse(result['resource'])) if queryMatch
       end
 
-      # if empty just return empty array to mirror R4 FHIR functionality
-      json_response(searchResults)
+      links = Array.new
+      links.push({'relation' => "self", 'url' => request.original_url})
+      lastUpdated = {'lastUpdated' => Time.now}
+
+      if !searchResults.empty?
+        jsonResult = {"resourceType" =>'Bundle', 'id' => Random.uuid(), 'meta' => lastUpdated, 'type' => "searchset", 'total' => searchResults.length(), 'link' => links, 'entry' => searchResults, 'search' => {'mode' => 'match'}, 'response' => {'status' => "200 OK", 'etag' => "W5"}}
+        json_response(JSON.pretty_generate(jsonResult))
+      else
+        jsonResult = {"resourceType" => 'Bundle', 'id' => Random.uuid, 'meta' => lastUpdated, 'type' => "searchset", 'total' => '0', 'link' => links}
+        json_response(JSON.pretty_generate(jsonResult))
+      end
 
     else
       render json: "Unknown Resource type: #{type}, valid resource types are : #{validTypes}", status: 404
