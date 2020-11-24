@@ -28,7 +28,11 @@ module FhirApi
     config.load_defaults 6.0
     config.api_only = true
     config.active_record.schema_format = :sql
-    config.capabilityStatementName = "CapabilityStatement-us-core-server.json"
+
+    configFile = File.read("config/config.json")
+    configFileData = JSON.parse(configFile)
+
+    config.capabilityStatementName = configFileData["capabilityStatementName"]
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
