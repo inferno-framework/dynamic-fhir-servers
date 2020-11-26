@@ -32,6 +32,30 @@ resource JSON
 
 fhir-validator-wrapper running in the background found at: https://github.com/inferno-community/fhir-validator-wrapper
 
+#### Route:
+
+POST /resource BODY: Must contain "id", "resource_type", "resource"
+
+#### Reponse:
+
+created resource JSON
+
+#### Route:
+
+DELETE /resource/id
+
+#### Reponse:
+
+successfully deleted resource with specified id
+
+#### Route:
+
+PUT /resource/id BODY: Must contain valid JSON to be stored in resource column
+
+#### Reponse:
+
+successfully updated resource with specified id
+
 ## System dependencies
 
 Requires PostGreSQL installed 1.2.3 or above
