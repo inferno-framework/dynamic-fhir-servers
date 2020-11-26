@@ -32,6 +32,8 @@ resource JSON
 
 fhir-validator-wrapper running in the background found at: https://github.com/inferno-community/fhir-validator-wrapper
 
+### Create
+
 #### Route:
 
 POST /resource BODY: Must contain "id", "resource_type", "resource"
@@ -40,6 +42,8 @@ POST /resource BODY: Must contain "id", "resource_type", "resource"
 
 created resource JSON
 
+### Delete
+
 #### Route:
 
 DELETE /resource/id
@@ -47,6 +51,8 @@ DELETE /resource/id
 #### Reponse:
 
 successfully deleted resource with specified id
+
+### Update
 
 #### Route:
 
