@@ -71,9 +71,20 @@ Requires Ruby version 2.7.2
 Requires Rails 6.0.3.4
 
 ## Configuration
+Assumes default PostGreSQL username/password, can be modified in the config/Database.yml file as needed
 
-Assumes default PostGreSQL password, can be modified in the Database.yml file as needed
+### Windows PostGreSQL Tips
+If you don't know the username/password of the postgre installed on your OS, uninstalling and reinstalling will
+be the easiest way to reset it. The default credentials are username: postgres password: null
 
+### MAC PostGreSQL Tips
+```shell script
+brew update
+brew install postgresql
+initdb /usr/local/var/postgres
+pg_ctl -D /usr/local/var/postgres start
+pg_ctl -D /usr/local/var/postgres stop
+```
 ## Database creation - this ideally will be simplified in the future to be one command that can run on startup without user interaction
 
 ```shell script
