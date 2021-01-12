@@ -111,3 +111,11 @@ rails s
 ```
 
 #### Note: https://github.com/inferno-community/fhir-validator-wrapper must be running on port 4567 if using search commands
+
+## Running in Docker
+
+To run this service in Docker, run the following commands in the `dynamic-fhir-servers` directory:
+* `docker-compose up --build`
+* (once the prior command has started all the containers): `docker-compose run dfs bin/setup_db.sh`
+
+The docker-compose maps the `package` and `synthea` directories in `db/seeds` into the container. Re-running `docker-compose run dfs bin/setup_db.sh` after changing those directories (and restarting the `dfs` container by running `docker-compose restart dfs`) will re-seed the database with the new structure. To clear the old structure prior to reloading, run `docker-compose run dfs bin/rake db:drop`.
