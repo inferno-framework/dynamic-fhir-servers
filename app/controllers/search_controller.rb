@@ -116,7 +116,7 @@ class SearchController < ApplicationController
           end
 
           # external integration to get result of FHIR expression
-          uri = URI("http://localhost:4567/evaluate?path=#{queryExpression}")
+          uri = URI("#{Rails.configuration.validatorURL}/evaluate?path=#{queryExpression}")
           req = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
           req.body = jsonResult.to_json
           res = Net::HTTP.start(uri.hostname, uri.port) do |http|

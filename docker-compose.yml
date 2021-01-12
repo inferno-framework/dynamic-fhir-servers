@@ -7,3 +7,33 @@ services:
     ports:
       - "3000:3000"
     restart: unless-stopped
+    depends_on:
+      - db
+      - validator
+    networks:
+      - dfsnet
+    environment:
+      - RAILS_LOG_TO_STDOUT=true
+    volumes:
+      - ./db/seeds:/home/app/dfs/db/seeds:ro
+  db:
+    image: postgres:12-alpine
+    volumes:
+      - dfs-pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - PGPASSWORD=dfspass1
+    restart: unless-stopped
+    networks:
+      - dfsnet
+  validator:
+    image: infernocommunity/fhir-validator-service:latest
+    restart: unless-stopped
+    networks:
+      - dfsnet
+
+networks:
+  dfsnet:
+
+volumes:
+  dfs-pgdata:

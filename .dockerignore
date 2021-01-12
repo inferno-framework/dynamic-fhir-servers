@@ -1,0 +1,5 @@
+Dockerfile
+Dockerfile.database
+docker-compose.yml
+db/seeds/package/*
+db/seeds/synthea/*
