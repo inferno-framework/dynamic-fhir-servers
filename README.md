@@ -118,4 +118,12 @@ To run this service in Docker, run the following commands in the `dynamic-fhir-s
 * `docker-compose up --build`
 * (once the prior command has started all the containers): `docker-compose run dfs bin/setup_db.sh`
 
+### Rails port configuration
+
+The docker-compose configuration maps the rails endpoint to port `3000` on the host machine.
+
+To change this, change the `ports` line in the `dfs` entry in `docker-compose.yml` from `- "3000:3000"` to `- "<your_desired_port>:3000"`, and restart the containers.
+
+For example: `- "8080:3000"` will map the rails endpoint to port `8080` on your machine.
+
 The docker-compose maps the `package` and `synthea` directories in `db/seeds` into the container. Re-running `docker-compose run dfs bin/setup_db.sh` after changing those directories (and restarting the `dfs` container by running `docker-compose restart dfs`) will re-seed the database with the new structure. To clear the old structure prior to reloading, run `docker-compose run dfs bin/rake db:drop`.
