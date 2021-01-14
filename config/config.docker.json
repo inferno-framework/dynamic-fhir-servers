@@ -1,4 +1,4 @@
 {
     "capabilityStatementName": "CapabilityStatement-us-core-server.json",
-    "validatorURL": "http://validator:4567"
+    "validatorURL": "http://validator_service:4567"
 }

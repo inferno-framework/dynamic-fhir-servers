@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
     depends_on:
       - db
-      - validator
+      - validator_service
     networks:
       - dfsnet
     environment:
@@ -26,7 +26,7 @@ services:
     restart: unless-stopped
     networks:
       - dfsnet
-  validator:
+  validator_service:
     image: infernocommunity/fhir-validator-service:latest
     restart: unless-stopped
     networks:
