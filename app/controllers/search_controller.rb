@@ -54,7 +54,7 @@ class SearchController < ApplicationController
 
     # now with valid resources
     type = params[:type]
-    if validTypes.include?(type)
+    if validTypes.include?(type) || !Dir.glob("**/app/jsonfiles/#{Rails.configuration.capabilityStatementName}").first
       queryParams = request.query_parameters
       validTypeParams = validParams[type]
 
